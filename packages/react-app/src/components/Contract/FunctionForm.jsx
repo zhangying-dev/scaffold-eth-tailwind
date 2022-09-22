@@ -1,15 +1,15 @@
-import { Button, Col, Divider, Input, Row, Tooltip } from "antd";
-import React, { useState } from "react";
-import Blockies from "react-blockies";
+import { Button, Col, Divider, Input, Row, Tooltip } from 'antd';
+import React, { useState } from 'react';
+import Blockies from 'react-blockies';
 
-import { Transactor } from "../../helpers";
-import { tryToDisplay, tryToDisplayAsText } from "./utils";
+import { Transactor } from '../../helpers';
+import { tryToDisplay, tryToDisplayAsText } from './utils';
 
-const { utils, BigNumber } = require("ethers");
+const { utils, BigNumber } = require('ethers');
 
 const getFunctionInputKey = (functionInfo, input, inputIndex) => {
-  const name = input?.name ? input.name : "input_" + inputIndex + "_";
-  return functionInfo.name + "_" + name + "_" + input.type;
+  const name = input?.name ? input.name : 'input_' + inputIndex + '_';
+  return functionInfo.name + '_' + name + '_' + input.type;
 };
 
 export default function FunctionForm({ contractFunction, functionInfo, provider, gasPrice, triggerRefresh }) {
@@ -22,13 +22,13 @@ export default function FunctionForm({ contractFunction, functionInfo, provider,
   const inputs = functionInfo.inputs.map((input, inputIndex) => {
     const key = getFunctionInputKey(functionInfo, input, inputIndex);
 
-    let buttons = "";
-    if (input.type === "bytes32") {
+    let buttons = '';
+    if (input.type === 'bytes32') {
       buttons = (
         <Tooltip placement="right" title="to bytes32">
           <div
             type="dashed"
-            style={{ cursor: "pointer" }}
+            style={{ cursor: 'pointer' }}
             onClick={async () => {
               if (utils.isHexString(form[key])) {
                 const formUpdate = { ...form };
@@ -45,12 +45,12 @@ export default function FunctionForm({ contractFunction, functionInfo, provider,
           </div>
         </Tooltip>
       );
-    } else if (input.type === "bytes") {
+    } else if (input.type === 'bytes') {
       buttons = (
         <Tooltip placement="right" title="to hex">
           <div
             type="dashed"
-            style={{ cursor: "pointer" }}
+            style={{ cursor: 'pointer' }}
             onClick={async () => {
               if (utils.isHexString(form[key])) {
                 const formUpdate = { ...form };
@@ -67,12 +67,12 @@ export default function FunctionForm({ contractFunction, functionInfo, provider,
           </div>
         </Tooltip>
       );
-    } else if (input.type === "uint256") {
+    } else if (input.type === 'uint256') {
       buttons = (
         <Tooltip placement="right" title="* 10 ** 18">
           <div
             type="dashed"
-            style={{ cursor: "pointer" }}
+            style={{ cursor: 'pointer' }}
             onClick={async () => {
               const formUpdate = { ...form };
               formUpdate[key] = utils.parseEther(form[key]);
@@ -83,7 +83,7 @@ export default function FunctionForm({ contractFunction, functionInfo, provider,
           </div>
         </Tooltip>
       );
-    } else if (input.type === "address") {
+    } else if (input.type === 'address') {
       const possibleAddress = form[key] && form[key].toLowerCase && form[key].toLowerCase().trim();
       if (possibleAddress && possibleAddress.length === 42) {
         buttons = (
@@ -98,7 +98,7 @@ export default function FunctionForm({ contractFunction, functionInfo, provider,
       <div style={{ margin: 2 }} key={key}>
         <Input
           size="large"
-          placeholder={input.name ? input.type + " " + input.name : input.type}
+          placeholder={input.name ? input.type + ' ' + input.name : input.type}
           autoComplete="off"
           value={form[key]}
           name={key}
@@ -126,10 +126,10 @@ export default function FunctionForm({ contractFunction, functionInfo, provider,
                 <Tooltip placement="right" title=" * 10^18 ">
                   <div
                     type="dashed"
-                    style={{ cursor: "pointer" }}
+                    style={{ cursor: 'pointer' }}
                     onClick={async () => {
                       const floatValue = parseFloat(txValue);
-                      if (floatValue) setTxValue("" + floatValue * 10 ** 18);
+                      if (floatValue) setTxValue('' + floatValue * 10 ** 18);
                     }}
                   >
                     ✳️
@@ -140,7 +140,7 @@ export default function FunctionForm({ contractFunction, functionInfo, provider,
                 <Tooltip placement="right" title="number to hex">
                   <div
                     type="dashed"
-                    style={{ cursor: "pointer" }}
+                    style={{ cursor: 'pointer' }}
                     onClick={async () => {
                       setTxValue(BigNumber.from(txValue).toHexString());
                     }}
@@ -167,13 +167,13 @@ export default function FunctionForm({ contractFunction, functionInfo, provider,
   };
 
   const buttonIcon =
-    functionInfo.type === "call" ? (
+    functionInfo.type === 'call' ? (
       <Button style={{ marginLeft: -32 }}>Read📡</Button>
     ) : (
       <Button style={{ marginLeft: -32 }}>Send💸</Button>
     );
   inputs.push(
-    <div style={{ cursor: "pointer", margin: 2 }} key="goButton">
+    <div style={{ cursor: 'pointer', margin: 2 }} key="goButton">
       <Input
         onChange={e => setReturnValue(e.target.value)}
         defaultValue=""
@@ -188,10 +188,10 @@ export default function FunctionForm({ contractFunction, functionInfo, provider,
               const args = functionInfo.inputs.map((input, inputIndex) => {
                 const key = getFunctionInputKey(functionInfo, input, inputIndex);
                 let value = form[key];
-                if (input.baseType === "array") {
+                if (input.baseType === 'array') {
                   value = JSON.parse(value);
-                } else if (input.type === "bool") {
-                  if (value === "true" || value === "1" || value === "0x1" || value === "0x01" || value === "0x0001") {
+                } else if (input.type === 'bool') {
+                  if (value === 'true' || value === '1' || value === '0x1' || value === '0x01' || value === '0x0001') {
                     value = 1;
                   } else {
                     value = 0;
@@ -201,7 +201,7 @@ export default function FunctionForm({ contractFunction, functionInfo, provider,
               });
 
               let result;
-              if (functionInfo.stateMutability === "view" || functionInfo.stateMutability === "pure") {
+              if (functionInfo.stateMutability === 'view' || functionInfo.stateMutability === 'pure') {
                 try {
                   const returned = await contractFunction(...args);
                   handleForm(returned);
@@ -226,7 +226,7 @@ export default function FunctionForm({ contractFunction, functionInfo, provider,
                 result = tryToDisplay(returned);
               }
 
-              console.log("SETTING RESULT:", result);
+              console.log('SETTING RESULT:', result);
               setReturnValue(result);
               triggerRefresh(true);
             }}
@@ -244,7 +244,7 @@ export default function FunctionForm({ contractFunction, functionInfo, provider,
         <Col
           span={8}
           style={{
-            textAlign: "right",
+            textAlign: 'right',
             opacity: 0.333,
             paddingRight: 6,
             fontSize: 24,

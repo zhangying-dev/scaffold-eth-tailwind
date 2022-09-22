@@ -1,18 +1,11 @@
 import { Fragment, useState, useEffect } from 'react';
 import { Transition } from '@headlessui/react';
-import {
-  ExclamationIcon,
-} from '@heroicons/react/solid';
+import { ExclamationIcon } from '@heroicons/react/solid';
 import { switchNetworks } from '../helpers';
 
-import { NETWORK } from "../constants";
+import { NETWORK } from '../constants';
 
-export default function NetworkDisplay({
-  NETWORKCHECK,
-  localChainId,
-  selectedChainId,
-  targetNetwork,
-}) {
+export default function NetworkDisplay({ NETWORKCHECK, localChainId, selectedChainId, targetNetwork }) {
   const [show, setShow] = useState(false);
   const [title, setTitle] = useState();
   const [body, setBody] = useState();
@@ -31,9 +24,11 @@ export default function NetworkDisplay({
       setTitle('Wrong Network ID');
       setBody(
         <>
-          <p>You have <b>chain id 1337</b> for localhost and you need to change it to <b>31337</b> to work with HardHat.</p>
+          <p>
+            You have <b>chain id 1337</b> for localhost and you need to change it to <b>31337</b> to work with HardHat.
+          </p>
           <p className="italic">MetaMask -&gt; Settings -&gt; Networks -&gt; Chain ID -&gt; 31337</p>
-        </>
+        </>,
       );
     } else {
       const networkSelected = NETWORK(selectedChainId);
@@ -42,17 +37,20 @@ export default function NetworkDisplay({
       setTitle('Wrong Network');
       setBody(
         <>
-          <p>You have <b>{networkSelected && networkSelected.name}</b> selected and you need to be on <b>{networkLocal && networkLocal.name}</b>.</p>
+          <p>
+            You have <b>{networkSelected && networkSelected.name}</b> selected and you need to be on{' '}
+            <b>{networkLocal && networkLocal.name}</b>.
+          </p>
           <div className="mt-3 flex">
             <button
               type="button"
               className="pointer-events-auto text-sm font-medium text-sky-600 hover:text-sky-500"
-              onClick={ () => switchNetworks(targetNetwork) }
+              onClick={() => switchNetworks(targetNetwork)}
             >
               Switch Network
             </button>
           </div>
-        </>
+        </>,
       );
     }
   };
@@ -75,9 +73,7 @@ export default function NetworkDisplay({
           </div>
           <div className="ml-3">
             <h3 className="text-sm font-medium text-red-800">{title}</h3>
-            <div className="mt-2 text-sm text-red-700">
-              {body}
-            </div>
+            <div className="mt-2 text-sm text-red-700">{body}</div>
           </div>
         </div>
       </div>

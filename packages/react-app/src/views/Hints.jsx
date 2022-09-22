@@ -1,17 +1,17 @@
-import { Select } from "antd";
-import React, { useState } from "react";
-import { utils } from "ethers";
+import { Select } from 'antd';
+import React, { useState } from 'react';
+import { utils } from 'ethers';
 
-import { useTokenList } from "eth-hooks/dapps/dex";
-import { Address, AddressInput } from "../components";
+import { useTokenList } from 'eth-hooks/dapps/dex';
+import { Address, AddressInput } from '../components';
 
 const { Option } = Select;
 
 export default function Hints({ yourLocalBalance, mainnetProvider, price, address }) {
   // Get a list of tokens from a tokenlist -> see tokenlists.org!
-  const [selectedToken, setSelectedToken] = useState("Pick a token!");
+  const [selectedToken, setSelectedToken] = useState('Pick a token!');
   const listOfTokens = useTokenList(
-    "https://raw.githubusercontent.com/SetProtocol/uniswap-tokenlist/main/set.tokenlist.json",
+    'https://raw.githubusercontent.com/SetProtocol/uniswap-tokenlist/main/set.tokenlist.json',
   );
 
   return (
@@ -21,7 +21,7 @@ export default function Hints({ yourLocalBalance, mainnetProvider, price, addres
         Edit your <b>contract</b> in
         <span
           className="highlight"
-          style={{ marginLeft: 4, /* backgroundColor: "#f9f9f9", */ padding: 4, borderRadius: 4, fontWeight: "bolder" }}
+          style={{ marginLeft: 4, /* backgroundColor: "#f9f9f9", */ padding: 4, borderRadius: 4, fontWeight: 'bolder' }}
         >
           packages/hardhat/contracts
         </span>
@@ -32,7 +32,7 @@ export default function Hints({ yourLocalBalance, mainnetProvider, price, addres
         <b>compile/deploy</b> with
         <span
           className="highlight"
-          style={{ marginLeft: 4, /* backgroundColor: "#f1f1f1", */ padding: 4, borderRadius: 4, fontWeight: "bolder" }}
+          style={{ marginLeft: 4, /* backgroundColor: "#f1f1f1", */ padding: 4, borderRadius: 4, fontWeight: 'bolder' }}
         >
           yarn run deploy
         </span>
@@ -43,7 +43,7 @@ export default function Hints({ yourLocalBalance, mainnetProvider, price, addres
         Your <b>contract artifacts</b> are automatically injected into your frontend at
         <span
           className="highlight"
-          style={{ marginLeft: 4, /* backgroundColor: "#f9f9f9", */ padding: 4, borderRadius: 4, fontWeight: "bolder" }}
+          style={{ marginLeft: 4, /* backgroundColor: "#f9f9f9", */ padding: 4, borderRadius: 4, fontWeight: 'bolder' }}
         >
           packages/react-app/src/contracts/
         </span>
@@ -54,7 +54,7 @@ export default function Hints({ yourLocalBalance, mainnetProvider, price, addres
         Edit your <b>frontend</b> in
         <span
           className="highlight"
-          style={{ marginLeft: 4, /* backgroundColor: "#f9f9f9", */ padding: 4, borderRadius: 4, fontWeight: "bolder" }}
+          style={{ marginLeft: 4, /* backgroundColor: "#f9f9f9", */ padding: 4, borderRadius: 4, fontWeight: 'bolder' }}
         >
           packages/reactapp/src/App.js
         </span>
@@ -71,7 +71,7 @@ export default function Hints({ yourLocalBalance, mainnetProvider, price, addres
             /* backgroundColor: "#f9f9f9", */
             padding: 4,
             borderRadius: 4,
-            fontWeight: "bolder",
+            fontWeight: 'bolder',
           }}
         >
           🖇 hooks
@@ -79,7 +79,7 @@ export default function Hints({ yourLocalBalance, mainnetProvider, price, addres
         and
         <span
           className="highlight"
-          style={{ marginLeft: 4, /* backgroundColor: "#f9f9f9", */ padding: 4, borderRadius: 4, fontWeight: "bolder" }}
+          style={{ marginLeft: 4, /* backgroundColor: "#f9f9f9", */ padding: 4, borderRadius: 4, fontWeight: 'bolder' }}
         >
           📦 components
         </span>
@@ -89,16 +89,16 @@ export default function Hints({ yourLocalBalance, mainnetProvider, price, addres
         for example, the
         <span
           className="highlight"
-          style={{ margin: 4, /* backgroundColor: "#f9f9f9", */ padding: 4, borderRadius: 4, fontWeight: "bolder" }}
+          style={{ margin: 4, /* backgroundColor: "#f9f9f9", */ padding: 4, borderRadius: 4, fontWeight: 'bolder' }}
         >
           useBalance()
-        </span>{" "}
+        </span>{' '}
         hook keeps track of your balance: <b>{utils.formatEther(yourLocalBalance || 0)}</b>
       </div>
 
       <div style={{ margin: 8 }}>
         <div>
-          <b>useTokenList()</b> can get you an array of tokens from{" "}
+          <b>useTokenList()</b> can get you an array of tokens from{' '}
           <a href="https://tokenlists.org" target="_blank" rel="noopener noreferrer">
             tokenlists.org!
           </a>
@@ -114,7 +114,7 @@ export default function Hints({ yourLocalBalance, mainnetProvider, price, addres
           optionFilterProp="children"
         >
           {listOfTokens.map(token => (
-            <Option key={token.address + "_" + token.symbol} value={token.symbol}>
+            <Option key={token.address + '_' + token.symbol} value={token.symbol}>
               {token.symbol}
             </Option>
           ))}
@@ -125,12 +125,12 @@ export default function Hints({ yourLocalBalance, mainnetProvider, price, addres
         as you build your app you&apos;ll need web3 specific components like an
         <span
           className="highlight"
-          style={{ margin: 4, /* backgroundColor: "#f9f9f9", */ padding: 4, borderRadius: 4, fontWeight: "bolder" }}
+          style={{ margin: 4, /* backgroundColor: "#f9f9f9", */ padding: 4, borderRadius: 4, fontWeight: 'bolder' }}
         >
-          {"<AddressInput/>"}
+          {'<AddressInput/>'}
         </span>
         component:
-        <div style={{ width: 350, padding: 16, margin: "auto" }}>
+        <div style={{ width: 350, padding: 16, margin: 'auto' }}>
           <AddressInput ensProvider={mainnetProvider} />
         </div>
         <div>(try putting in your address, an ens address, or scanning a QR code)</div>
@@ -140,17 +140,17 @@ export default function Hints({ yourLocalBalance, mainnetProvider, price, addres
         this balance could be multiplied by
         <span
           className="highlight"
-          style={{ margin: 4, /* backgroundColor: "#f9f9f9", */ padding: 4, borderRadius: 4, fontWeight: "bolder" }}
+          style={{ margin: 4, /* backgroundColor: "#f9f9f9", */ padding: 4, borderRadius: 4, fontWeight: 'bolder' }}
         >
           price
-        </span>{" "}
+        </span>{' '}
         that is loaded with the
         <span
           className="highlight"
-          style={{ margin: 4, /* backgroundColor: "#f9f9f9", */ padding: 4, borderRadius: 4, fontWeight: "bolder" }}
+          style={{ margin: 4, /* backgroundColor: "#f9f9f9", */ padding: 4, borderRadius: 4, fontWeight: 'bolder' }}
         >
           usePrice
-        </span>{" "}
+        </span>{' '}
         hook with the current value: <b>${price}</b>
       </div>
 
@@ -159,7 +159,7 @@ export default function Hints({ yourLocalBalance, mainnetProvider, price, addres
         use the <b>faucet</b> to send funds to
         <span
           className="highlight"
-          style={{ marginLeft: 4, /* backgroundColor: "#f9f9f9", */ padding: 4, borderRadius: 4, fontWeight: "bolder" }}
+          style={{ marginLeft: 4, /* backgroundColor: "#f9f9f9", */ padding: 4, borderRadius: 4, fontWeight: 'bolder' }}
         >
           <Address address={address} minimized /> {address}
         </span>
@@ -170,14 +170,14 @@ export default function Hints({ yourLocalBalance, mainnetProvider, price, addres
         deploy to a testnet or mainnet by editing
         <span
           className="highlight"
-          style={{ marginLeft: 4, /* backgroundColor: "#f9f9f9", */ padding: 4, borderRadius: 4, fontWeight: "bolder" }}
+          style={{ marginLeft: 4, /* backgroundColor: "#f9f9f9", */ padding: 4, borderRadius: 4, fontWeight: 'bolder' }}
         >
           packages/hardhat/hardhat.config.js
         </span>
         and running
         <span
           className="highlight"
-          style={{ marginLeft: 4, /* backgroundColor: "#f1f1f1", */ padding: 4, borderRadius: 4, fontWeight: "bolder" }}
+          style={{ marginLeft: 4, /* backgroundColor: "#f1f1f1", */ padding: 4, borderRadius: 4, fontWeight: 'bolder' }}
         >
           yarn run deploy
         </span>
@@ -187,30 +187,30 @@ export default function Hints({ yourLocalBalance, mainnetProvider, price, addres
         <span style={{ marginRight: 8 }}>🔑</span>
         <span
           className="highlight"
-          style={{ marginLeft: 4, /* backgroundColor: "#f1f1f1", */ padding: 4, borderRadius: 4, fontWeight: "bolder" }}
+          style={{ marginLeft: 4, /* backgroundColor: "#f1f1f1", */ padding: 4, borderRadius: 4, fontWeight: 'bolder' }}
         >
           yarn run generate
         </span>
         will create a deployer account in
         <span
           className="highlight"
-          style={{ marginLeft: 4, /* backgroundColor: "#f9f9f9", */ padding: 4, borderRadius: 4, fontWeight: "bolder" }}
+          style={{ marginLeft: 4, /* backgroundColor: "#f9f9f9", */ padding: 4, borderRadius: 4, fontWeight: 'bolder' }}
         >
           packages/hardhat
         </span>
         <div style={{ marginTop: 8 }}>
-          (use{" "}
+          (use{' '}
           <span
             className="highlight"
             style={{
               marginLeft: 4,
               /* backgroundColor: "#f1f1f1", */ padding: 4,
               borderRadius: 4,
-              fontWeight: "bolder",
+              fontWeight: 'bolder',
             }}
           >
             yarn run account
-          </span>{" "}
+          </span>{' '}
           to display deployer address and balance)
         </div>
       </div>
@@ -220,7 +220,7 @@ export default function Hints({ yourLocalBalance, mainnetProvider, price, addres
         build your app with
         <span
           className="highlight"
-          style={{ marginLeft: 4, /* backgroundColor: "#f1f1f1", */ padding: 4, borderRadius: 4, fontWeight: "bolder" }}
+          style={{ marginLeft: 4, /* backgroundColor: "#f1f1f1", */ padding: 4, borderRadius: 4, fontWeight: 'bolder' }}
         >
           yarn run build
         </span>
@@ -231,21 +231,21 @@ export default function Hints({ yourLocalBalance, mainnetProvider, price, addres
         ship it!
         <span
           className="highlight"
-          style={{ marginLeft: 4, /* backgroundColor: "#f1f1f1", */ padding: 4, borderRadius: 4, fontWeight: "bolder" }}
+          style={{ marginLeft: 4, /* backgroundColor: "#f1f1f1", */ padding: 4, borderRadius: 4, fontWeight: 'bolder' }}
         >
           yarn run surge
         </span>
         or
         <span
           className="highlight"
-          style={{ marginLeft: 4, /* backgroundColor: "#f1f1f1", */ padding: 4, borderRadius: 4, fontWeight: "bolder" }}
+          style={{ marginLeft: 4, /* backgroundColor: "#f1f1f1", */ padding: 4, borderRadius: 4, fontWeight: 'bolder' }}
         >
           yarn run s3
         </span>
         or
         <span
           className="highlight"
-          style={{ marginLeft: 4, /* backgroundColor: "#f1f1f1", */ padding: 4, borderRadius: 4, fontWeight: "bolder" }}
+          style={{ marginLeft: 4, /* backgroundColor: "#f1f1f1", */ padding: 4, borderRadius: 4, fontWeight: 'bolder' }}
         >
           yarn run ipfs
         </span>
@@ -256,7 +256,7 @@ export default function Hints({ yourLocalBalance, mainnetProvider, price, addres
         for support, join this
         <span
           className="highlight"
-          style={{ marginLeft: 4, /* backgroundColor: "#f9f9f9", */ padding: 4, borderRadius: 4, fontWeight: "bolder" }}
+          style={{ marginLeft: 4, /* backgroundColor: "#f9f9f9", */ padding: 4, borderRadius: 4, fontWeight: 'bolder' }}
         >
           <a target="_blank" rel="noopener noreferrer" href="https://t.me/joinchat/KByvmRe5wkR-8F_zz6AjpA">
             Telegram Chat

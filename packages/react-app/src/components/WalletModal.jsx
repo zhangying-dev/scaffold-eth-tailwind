@@ -1,15 +1,15 @@
 import React, { Fragment, useState, useEffect } from 'react';
 import { ethers } from 'ethers';
 import QR from 'qrcode.react';
-import { Dialog, Transition } from '@headlessui/react'
+import { Dialog, Transition } from '@headlessui/react';
 import { XIcon } from '@heroicons/react/outline';
 import { DocumentDuplicateIcon, CheckCircleIcon } from '@heroicons/react/outline';
 
-import { Transactor, classNames } from "../helpers";
-import Address from "./Address";
-import AddressInput from "./AddressInput";
-import Balance from "./Balance";
-import EtherInput from "./EtherInput";
+import { Transactor, classNames } from '../helpers';
+import Address from './Address';
+import AddressInput from './AddressInput';
+import Balance from './Balance';
+import EtherInput from './EtherInput';
 
 /**
   ~ What it does? ~
@@ -42,8 +42,8 @@ import EtherInput from "./EtherInput";
 
 const DISPLAY_STATES = {
   qr: 'qr',
-  private_key: 'private_key'
-}
+  private_key: 'private_key',
+};
 
 export default function WalletModal(props) {
   const [signerAddress, setSignerAddress] = useState();
@@ -56,7 +56,7 @@ export default function WalletModal(props) {
     setTimeout(() => {
       setPrivateKeyCopied(false);
     }, 800);
-  }
+  };
 
   useEffect(() => {
     async function getAddress() {
@@ -71,13 +71,13 @@ export default function WalletModal(props) {
   const selectedAddress = props.address || signerAddress;
   const open = props.open || false;
   const setOpen = props.setOpen;
-  
+
   const [amount, setAmount] = useState();
   const [toAddress, setToAddress] = useState();
   const [displayState, setDisplayState] = useState();
 
   let display;
-  switch(displayState) {
+  switch (displayState) {
     case DISPLAY_STATES.qr:
       display = (
         <div>
@@ -94,7 +94,7 @@ export default function WalletModal(props) {
 
       break;
     case DISPLAY_STATES.private_key:
-      const pk = localStorage.getItem("metaPrivateKey");
+      const pk = localStorage.getItem('metaPrivateKey');
       const wallet = new ethers.Wallet(pk);
 
       if (wallet.address !== selectedAddress) {
@@ -106,15 +106,15 @@ export default function WalletModal(props) {
       const extraPkDisplay = [];
       extraPkDisplayAdded[wallet.address] = true;
       extraPkDisplay.push(
-        <div style={{ fontSize: 16, padding: 2, backgroundStyle: "#89e789" }}>
-          <a href={"/pk#" + pk}>
+        <div style={{ fontSize: 16, padding: 2, backgroundStyle: '#89e789' }}>
+          <a href={'/pk#' + pk}>
             <Address minimized address={wallet.address} ensProvider={props.ensProvider} /> {wallet.address.substr(0, 6)}
           </a>
         </div>,
       );
 
       for (const key in localStorage) {
-        if (key.indexOf("metaPrivateKey_backup") >= 0) {
+        if (key.indexOf('metaPrivateKey_backup') >= 0) {
           console.log(key);
           const pastpk = localStorage.getItem(key);
           const pastwallet = new ethers.Wallet(pastpk);
@@ -122,8 +122,8 @@ export default function WalletModal(props) {
             extraPkDisplayAdded[pastwallet.address] = true;
             extraPkDisplay.push(
               <div style={{ fontSize: 16 }}>
-                <a href={"/pk#" + pastpk}>
-                  <Address minimized address={pastwallet.address} ensProvider={props.ensProvider} />{" "}
+                <a href={'/pk#' + pastpk}>
+                  <Address minimized address={pastwallet.address} ensProvider={props.ensProvider} />{' '}
                   {pastwallet.address.substr(0, 6)}
                 </a>
               </div>,
@@ -137,27 +137,31 @@ export default function WalletModal(props) {
           <b>Private Key: </b>
           <span className="break-all">
             {pk}
-            {privateKeyCopied
-              ?
-                <CheckCircleIcon className="inline-block ml-1 font-normal text-sky-600 h-4 w-4 cursor-pointer" aria-hidden="true" />
-              :
-                <DocumentDuplicateIcon
-                  className="inline-block ml-1 font-normal text-sky-600 h-4 w-4 cursor-pointer"
-                  aria-hidden="true"
-                  onClick={ (e) => copyPrivateKey(e, pk) }
-                />
-            }
+            {privateKeyCopied ? (
+              <CheckCircleIcon
+                className="inline-block ml-1 font-normal text-sky-600 h-4 w-4 cursor-pointer"
+                aria-hidden="true"
+              />
+            ) : (
+              <DocumentDuplicateIcon
+                className="inline-block ml-1 font-normal text-sky-600 h-4 w-4 cursor-pointer"
+                aria-hidden="true"
+                onClick={e => copyPrivateKey(e, pk)}
+              />
+            )}
           </span>
 
           <hr className="dark:border-gray-700" />
 
           <i>
-            Point your camera phone at qr code to open in{" "}
-            <a target="_blank" href={"https://xdai.io/" + pk} rel="noopener noreferrer">burner wallet</a>
+            Point your camera phone at qr code to open in{' '}
+            <a target="_blank" href={'https://xdai.io/' + pk} rel="noopener noreferrer">
+              burner wallet
+            </a>
           </i>
           <div class="flex justify-center">
             <QR
-              value={"https://xdai.io/" + pk}
+              value={'https://xdai.io/' + pk}
               size="300"
               level="H"
               includeMargin
@@ -173,13 +177,13 @@ export default function WalletModal(props) {
                 type="button"
                 className="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-sky-600 text-base font-medium text-white hover:bg-sky-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-sky-500 sm:w-auto sm:text-sm"
                 onClick={() => {
-                  const currentPrivateKey = window.localStorage.getItem("metaPrivateKey");
+                  const currentPrivateKey = window.localStorage.getItem('metaPrivateKey');
                   if (currentPrivateKey) {
-                    window.localStorage.setItem("metaPrivateKey_backup" + Date.now(), currentPrivateKey);
+                    window.localStorage.setItem('metaPrivateKey_backup' + Date.now(), currentPrivateKey);
                   }
                   const randomWallet = ethers.Wallet.createRandom();
                   const privateKey = randomWallet._signingKey().privateKey;
-                  window.localStorage.setItem("metaPrivateKey", privateKey);
+                  window.localStorage.setItem('metaPrivateKey', privateKey);
                   window.location.reload();
                 }}
               >
@@ -187,7 +191,7 @@ export default function WalletModal(props) {
               </button>
             </div>
           ) : (
-            ""
+            ''
           )}
         </div>
       );
@@ -201,12 +205,7 @@ export default function WalletModal(props) {
       display = (
         <div>
           <div style={inputStyle}>
-            <AddressInput
-              autoFocus
-              ensProvider={props.ensProvider}
-              address={toAddress}
-              onChange={setToAddress}
-            />
+            <AddressInput autoFocus ensProvider={props.ensProvider} address={toAddress} onChange={setToAddress} />
           </div>
           <div style={inputStyle}>
             <EtherInput
@@ -226,23 +225,27 @@ export default function WalletModal(props) {
 
     let value;
     try {
-      value = ethers.utils.parseEther("" + amount);
+      value = ethers.utils.parseEther('' + amount);
     } catch (e) {
       // failed to parseEther, try something else
-      value = ethers.utils.parseEther("" + parseFloat(amount).toFixed(8));
+      value = ethers.utils.parseEther('' + parseFloat(amount).toFixed(8));
     }
 
     tx({
       to: toAddress,
       value,
     });
-  }
+  };
 
   const tabs = [
     { name: 'Send', action: () => setDisplayState(), current: !displayState },
     { name: 'Receive', action: () => setDisplayState(DISPLAY_STATES.qr), current: displayState === DISPLAY_STATES.qr },
-    { name: 'Private Key', action: () => setDisplayState(DISPLAY_STATES.private_key), current: displayState === DISPLAY_STATES.private_key },
-  ]
+    {
+      name: 'Private Key',
+      action: () => setDisplayState(DISPLAY_STATES.private_key),
+      current: displayState === DISPLAY_STATES.private_key,
+    },
+  ];
 
   return (
     <Transition.Root show={open} as={Fragment}>
@@ -286,10 +289,18 @@ export default function WalletModal(props) {
               </div>
               <div className="">
                 <div className="mt-3 text-center sm:mt-0 sm:ml-4 sm:text-left">
-                  <Dialog.Title as="h3" className="flex justify-center sm:justify-start text-lg leading-6 font-normal text-gray-900">
+                  <Dialog.Title
+                    as="h3"
+                    className="flex justify-center sm:justify-start text-lg leading-6 font-normal text-gray-900"
+                  >
                     <Address address={selectedAddress} ensProvider={props.ensProvider} />
                     <span className="inline-flex items-center ml-2 px-2 py-0.5 rounded-full bg-gray-100 text-gray-800 dark:bg-gray-900 dark:text-white">
-                      <Balance address={selectedAddress} provider={props.provider} dollarMultiplier={props.price} textSize={'text-lg'} />
+                      <Balance
+                        address={selectedAddress}
+                        provider={props.provider}
+                        dollarMultiplier={props.price}
+                        textSize={'text-lg'}
+                      />
                     </span>
                   </Dialog.Title>
 
@@ -298,7 +309,7 @@ export default function WalletModal(props) {
                     <div className="block">
                       <div className="border-b border-gray-200 dark:border-gray-700">
                         <nav className="-mb-px flex justify-center sm:justify-start space-x-8" aria-label="Tabs">
-                          {tabs.map((tab) => (
+                          {tabs.map(tab => (
                             <span
                               key={tab.name}
                               onClick={tab.action}
@@ -306,7 +317,7 @@ export default function WalletModal(props) {
                                 tab.current
                                   ? 'border-sky-500 text-sky-600'
                                   : 'border-transparent text-gray-500 dark:text-gray-300 hover:text-gray-700 dark:hover:text-white hover:border-gray-300',
-                                'cursor-pointer whitespace-nowrap py-2 px-1 border-b-2 font-medium text-sm'
+                                'cursor-pointer whitespace-nowrap py-2 px-1 border-b-2 font-medium text-sm',
                               )}
                               aria-current={tab.current ? 'page' : undefined}
                             >
@@ -319,9 +330,7 @@ export default function WalletModal(props) {
                   </div>
                   {/* End Tab List */}
 
-                  <div className="mt-2">
-                    {display}
-                  </div>
+                  <div className="mt-2">{display}</div>
                 </div>
               </div>
               <div className="mt-5 sm:mt-4 sm:flex sm:flex-row-reverse">
@@ -331,7 +340,7 @@ export default function WalletModal(props) {
                     disabled={!amount || !toAddress}
                     className={classNames(
                       !amount || !toAddress ? 'opacity-50 cursor-not-allowed' : 'hover:bg-sky-700',
-                      "w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-sky-600 text-base font-medium text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-sky-500 sm:ml-3 sm:w-auto sm:text-sm"
+                      'w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-sky-600 text-base font-medium text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-sky-500 sm:ml-3 sm:w-auto sm:text-sm',
                     )}
                     onClick={sendTx}
                   >

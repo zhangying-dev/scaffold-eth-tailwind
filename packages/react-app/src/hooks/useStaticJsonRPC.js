@@ -1,5 +1,5 @@
-import { useCallback, useEffect, useState } from "react";
-import { ethers } from "ethers";
+import { useCallback, useEffect, useState } from 'react';
+import { ethers } from 'ethers';
 
 const createProvider = async url => {
   const p = new ethers.providers.StaticJsonRpcProvider(url);

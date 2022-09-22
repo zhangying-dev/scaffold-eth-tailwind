@@ -1,8 +1,8 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import { Select } from "antd";
-import { ethers } from "ethers";
-import React, { useCallback, useMemo, useState } from "react";
-import Blockie from "./Blockie";
+import { Select } from 'antd';
+import { ethers } from 'ethers';
+import React, { useCallback, useMemo, useState } from 'react';
+import Blockie from './Blockie';
 
 // probably we need to change value={toAddress} to address={toAddress}
 
@@ -31,7 +31,7 @@ import Blockie from "./Blockie";
                           or onChange={address => { setToAddress(address);}}
 */
 
-const isENS = (address = "") => address.endsWith(".eth") || address.endsWith(".xyz");
+const isENS = (address = '') => address.endsWith('.eth') || address.endsWith('.xyz');
 
 export default function MultiAddressInput(props) {
   const { ensProvider, onChange } = props;
@@ -46,11 +46,11 @@ export default function MultiAddressInput(props) {
     // use search result to format children
     return searchResults.map(i => (
       <Select.Option key={i.address} value={i.address}>
-        <div style={{ display: "flex", alignItems: "center" }}>
-          <div style={{ marginRight: "3px" }}>
+        <div style={{ display: 'flex', alignItems: 'center' }}>
+          <div style={{ marginRight: '3px' }}>
             <Blockie address={i.address} size={5} scale={3} />
           </div>
-          {i.ens ? i.ens : i.address?.substr(0, 5) + "..." + i.address?.substr(-4)}
+          {i.ens ? i.ens : i.address?.substr(0, 5) + '...' + i.address?.substr(-4)}
         </div>
       </Select.Option>
     ));
@@ -61,7 +61,7 @@ export default function MultiAddressInput(props) {
 
   const manageSearch = useCallback(
     async newValue => {
-      if (typeof newValue !== "undefined") {
+      if (typeof newValue !== 'undefined') {
         let address = newValue;
         let isResolvedAddress = true;
         if (isENS(address)) {
@@ -107,7 +107,7 @@ export default function MultiAddressInput(props) {
     setSearchResults([]);
     setValue(e);
 
-    if (typeof onChange === "function") {
+    if (typeof onChange === 'function') {
       onChange(e.map(i => i.value));
     }
   };
@@ -126,11 +126,11 @@ export default function MultiAddressInput(props) {
         mode="multiple"
         id="0xMultiAddresses" // name it something other than address for auto fill doxxing
         name="0xMultiAddresses" // name it something other than address for auto fill doxxing
-        placeholder={props.placeholder ? props.placeholder : "address"}
+        placeholder={props.placeholder ? props.placeholder : 'address'}
         value={value}
         onChange={handleOnChange}
         notFoundContent={null}
-        style={{ width: "100%" }}
+        style={{ width: '100%' }}
       >
         {children}
       </Select>

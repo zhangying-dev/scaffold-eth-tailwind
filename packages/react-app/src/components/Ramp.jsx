@@ -1,5 +1,5 @@
-import React, { Fragment, useState } from "react";
-import { RampInstantSDK } from "@ramp-network/ramp-instant-sdk";
+import React, { Fragment, useState } from 'react';
+import { RampInstantSDK } from '@ramp-network/ramp-instant-sdk';
 import { Dialog, Transition } from '@headlessui/react';
 import { XIcon } from '@heroicons/react/outline';
 
@@ -49,21 +49,28 @@ export default function Ramp(props) {
 
   const rampAction = () => {
     new RampInstantSDK({
-      hostAppName: "scaffold-eth",
-      hostLogoUrl: "https://scaffoldeth.io/scaffold-eth.png",
-      swapAmount: "100000000000000000", // 0.1 ETH in wei  ?
-      swapAsset: "ETH",
+      hostAppName: 'scaffold-eth',
+      hostLogoUrl: 'https://scaffoldeth.io/scaffold-eth.png',
+      swapAmount: '100000000000000000', // 0.1 ETH in wei  ?
+      swapAsset: 'ETH',
       userAddress: props.address,
-    }).on("*", event => console.log(event)).show();
-  }
+    })
+      .on('*', event => console.log(event))
+      .show();
+  };
 
   const buyEthOptions = [
-    { name: 'Wyre', emoji: '🇺🇸', action: () => window.open("https://pay.sendwyre.com/purchase?destCurrency=ETH&sourceAmount=25&dest=" + props.address) },
+    {
+      name: 'Wyre',
+      emoji: '🇺🇸',
+      action: () =>
+        window.open('https://pay.sendwyre.com/purchase?destCurrency=ETH&sourceAmount=25&dest=' + props.address),
+    },
     { name: 'Ramp', emoji: '🇬🇧', action: rampAction },
-    { name: 'Coinbase', emoji: '🏦', action: () => window.open("https://www.coinbase.com/buy-ethereum") },
+    { name: 'Coinbase', emoji: '🏦', action: () => window.open('https://www.coinbase.com/buy-ethereum') },
   ];
 
-  const ethOptionButtons = buyEthOptions.map((option) => {
+  const ethOptionButtons = buyEthOptions.map(option => {
     return (
       <button
         key={option.name}
@@ -78,8 +85,11 @@ export default function Ramp(props) {
 
   return (
     <>
-      <span onClick={ () => setOpen(true) } className="cursor-pointer inline-flex items-center px-3 py-0.5 rounded-full text-base font-normal bg-gray-100 text-gray-800 dark:bg-gray-900 dark:text-white">
-        🤑 ${typeof props.price === "undefined" ? 0 : props.price.toFixed(2)}
+      <span
+        onClick={() => setOpen(true)}
+        className="cursor-pointer inline-flex items-center px-3 py-0.5 rounded-full text-base font-normal bg-gray-100 text-gray-800 dark:bg-gray-900 dark:text-white"
+      >
+        🤑 ${typeof props.price === 'undefined' ? 0 : props.price.toFixed(2)}
       </span>
       {/* Modal */}
       <Transition.Root show={open} as={Fragment}>
@@ -126,13 +136,9 @@ export default function Ramp(props) {
                     <Dialog.Title as="h3" className="text-lg leading-6 font-medium text-gray-900 dark:text-white">
                       Buy ETH
                     </Dialog.Title>
-                    <div className="my-2 flex flex-wrap justify-center sm:justify-start">
-                      {ethOptionButtons}
-                    </div>
+                    <div className="my-2 flex flex-wrap justify-center sm:justify-start">{ethOptionButtons}</div>
                     <h3 class="text-lg leading-6 font-medium text-gray-900 dark:text-white">Testnet ETH</h3>
-                    <div className="mt-2 flex flex-wrap justify-center sm:justify-start">
-                      {allFaucets}
-                    </div>
+                    <div className="mt-2 flex flex-wrap justify-center sm:justify-start">{allFaucets}</div>
                   </div>
                 </div>
                 <div className="mt-5 sm:mt-4 sm:flex sm:flex-row-reverse">

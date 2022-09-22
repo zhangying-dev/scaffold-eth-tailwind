@@ -1,16 +1,13 @@
-import React, { useCallback, useState } from "react";
-import { ethers } from "ethers";
-import { useLookupAddress } from "eth-hooks/dapps/ens";
-import { QrReader } from "react-qr-reader";
+import React, { useCallback, useState } from 'react';
+import { ethers } from 'ethers';
+import { useLookupAddress } from 'eth-hooks/dapps/ens';
+import { QrReader } from 'react-qr-reader';
 
-import {
-  QrcodeIcon,
-  IdentificationIcon,
-} from '@heroicons/react/outline';
+import { QrcodeIcon, IdentificationIcon } from '@heroicons/react/outline';
 
-import Blockie from "./Blockie";
+import Blockie from './Blockie';
 
-const isENS = (address = "") => address.endsWith(".eth") || address.endsWith(".xyz");
+const isENS = (address = '') => address.endsWith('.eth') || address.endsWith('.xyz');
 
 // probably we need to change value={toAddress} to address={toAddress}
 
@@ -43,12 +40,12 @@ export default function AddressInput(props) {
   const [value, setValue] = useState(props.value);
   const [scan, setScan] = useState(false);
 
-  const currentValue = typeof props.value !== "undefined" ? props.value : value;
+  const currentValue = typeof props.value !== 'undefined' ? props.value : value;
   const ens = useLookupAddress(props.ensProvider, currentValue);
 
   const updateAddress = useCallback(
     async newValue => {
-      if (typeof newValue !== "undefined") {
+      if (typeof newValue !== 'undefined') {
         let address = newValue;
         if (isENS(address)) {
           try {
@@ -60,7 +57,7 @@ export default function AddressInput(props) {
           } catch (e) {}
         }
         setValue(address);
-        if (typeof onChange === "function") {
+        if (typeof onChange === 'function') {
           onChange(address);
         }
       }
@@ -69,7 +66,7 @@ export default function AddressInput(props) {
   );
 
   let blockie;
-  if (currentValue && typeof currentValue.toLowerCase === "function") {
+  if (currentValue && typeof currentValue.toLowerCase === 'function') {
     blockie = <Blockie className="rounded" address={currentValue} size={4} scale={4} />;
   } else {
     blockie = <IdentificationIcon className="h-4 w-4 text-gray-400" aria-hidden="true" />;
@@ -78,15 +75,13 @@ export default function AddressInput(props) {
   const input = (
     <div className="mt-1 flex rounded-md shadow-sm">
       <div className="relative flex items-stretch flex-grow focus-within:z-10">
-        <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-          {blockie}
-        </div>
+        <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">{blockie}</div>
         <input
           id="0xAddress" // name it something other than address for auto fill doxxing
           name="0xAddress" // name it something other than address for auto fill doxxing
           autoComplete="off"
           autoFocus={props.autoFocus}
-          placeholder={props.placeholder ? props.placeholder : "Send to Address"}
+          placeholder={props.placeholder ? props.placeholder : 'Send to Address'}
           className="block w-full rounded-none rounded-l-md pl-8 sm:text-sm border border-gray-300 focus:outline-none dark:text-white dark:bg-gray-900 dark:border-gray-700 focus:outline-none"
           value={ethers.utils.isAddress(currentValue) && !isENS(currentValue) && isENS(ens) ? ens : currentValue}
           onChange={e => updateAddress(e.target.value)}
@@ -95,7 +90,7 @@ export default function AddressInput(props) {
       <button
         type="button"
         className="-ml-px relative inline-flex items-center px-2.5 py-2 border border-gray-300 rounded-r-md text-sm font-medium text-gray-700 bg-gray-50 hover:bg-gray-100 dark:bg-gray-900 dark:border-gray-700 dark:hover:bg-gray-800"
-        onClick={() => setScan(!scan) }
+        onClick={() => setScan(!scan)}
       >
         <QrcodeIcon className="h-5 w-5 text-gray-400" aria-hidden="true" />
       </button>
@@ -106,28 +101,28 @@ export default function AddressInput(props) {
     <>
       {input}
       {scan && (
-        <div className="cursor-pointer absolute inset-0 w-full z-10" onClick={ () => setScan(false) }>
+        <div className="cursor-pointer absolute inset-0 w-full z-10" onClick={() => setScan(false)}>
           <QrReader
-            style={{ width: "100%" }}
+            style={{ width: '100%' }}
             videoStyle={{ height: 'auto', borderRadius: '0.5rem' }}
             constraints={{ facingMode: 'environment' }}
             onResult={(result, error) => {
               if (!!result) {
                 const newValue = result?.text;
-                console.log("SCAN VALUE", newValue);
+                console.log('SCAN VALUE', newValue);
 
                 let possibleNewValue = newValue;
-                if (possibleNewValue.indexOf("/") >= 0) {
-                  possibleNewValue = possibleNewValue.substr(possibleNewValue.lastIndexOf("0x"));
-                  console.log("CLEANED VALUE", possibleNewValue);
+                if (possibleNewValue.indexOf('/') >= 0) {
+                  possibleNewValue = possibleNewValue.substr(possibleNewValue.lastIndexOf('0x'));
+                  console.log('CLEANED VALUE', possibleNewValue);
                 }
 
                 setScan(false);
                 updateAddress(possibleNewValue);
               }
-    
+
               if (!!error) {
-                console.log("SCAN ERROR", error);
+                console.log('SCAN ERROR', error);
               }
             }}
           />

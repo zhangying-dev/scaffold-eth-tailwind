@@ -1,12 +1,12 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import { Select } from "antd";
-import { useState, useMemo, useEffect } from "react";
-import { ethers } from "ethers";
-import axios from "axios";
-import searchico from "searchico";
+import { Select } from 'antd';
+import { useState, useMemo, useEffect } from 'react';
+import { ethers } from 'ethers';
+import axios from 'axios';
+import searchico from 'searchico';
 
 // helpers to load token name and symbol for unlisted tokens
-const ERC20ABI = ["function symbol() view returns (string)", "function name() view returns (string)"];
+const ERC20ABI = ['function symbol() view returns (string)', 'function name() view returns (string)'];
 
 const loadERC20 = async (address, p) => {
   try {
@@ -35,7 +35,7 @@ export default function TokenSelect({ onChange, chainId = 1, nativeToken = {}, l
   const [searchResults, setSearchResults] = useState([]);
 
   const listCollection = useMemo(() => {
-    return searchico(list, { keys: ["address", "name", "symbol"] });
+    return searchico(list, { keys: ['address', 'name', 'symbol'] });
   }, [list.length]);
 
   const children = useMemo(() => {
@@ -45,15 +45,15 @@ export default function TokenSelect({ onChange, chainId = 1, nativeToken = {}, l
 
     // use search result to format children
     return searchResults.map(i => (
-      <Select.Option key={i.address} style={{ paddingTop: "5px", paddingBottom: "5px" }} value={i.address}>
-        <div style={{ display: "flex", alignItems: "center" }}>
+      <Select.Option key={i.address} style={{ paddingTop: '5px', paddingBottom: '5px' }} value={i.address}>
+        <div style={{ display: 'flex', alignItems: 'center' }}>
           {i.logoURI && (
-            <div style={{ marginRight: "5px" }}>
+            <div style={{ marginRight: '5px' }}>
               <img src={i.logoURI} alt={`${i.name} (${i.symbol})`} />
             </div>
           )}
-          {i.name} - {i.symbol} {i.address?.substr(0, 5) + "..." + i.address?.substr(-4)}{" "}
-          {i.unlisted && <span style={{ fontStyle: "italic", fontSize: "12px", marginLeft: "3px" }}> (unlisted) </span>}
+          {i.name} - {i.symbol} {i.address?.substr(0, 5) + '...' + i.address?.substr(-4)}{' '}
+          {i.unlisted && <span style={{ fontStyle: 'italic', fontSize: '12px', marginLeft: '3px' }}> (unlisted) </span>}
         </div>
       </Select.Option>
     ));
@@ -70,10 +70,10 @@ export default function TokenSelect({ onChange, chainId = 1, nativeToken = {}, l
         const nativeTokenObj = {
           chainId: chainId,
           decimals: 18,
-          name: "Native Token",
-          symbol: "ETH",
-          address: "0x0000000000000000000000000000000000000000",
-          logoURI: "https://assets.coingecko.com/coins/images/279/thumb/ethereum.png?1595348880",
+          name: 'Native Token',
+          symbol: 'ETH',
+          address: '0x0000000000000000000000000000000000000000',
+          logoURI: 'https://assets.coingecko.com/coins/images/279/thumb/ethereum.png?1595348880',
           ...nativeToken,
         };
 
@@ -90,7 +90,7 @@ export default function TokenSelect({ onChange, chainId = 1, nativeToken = {}, l
               unlisted: true,
               symbol: null,
               address: checksumAddress,
-              logoURI: "",
+              logoURI: '',
               ...tokenInfo,
             },
           ];
@@ -110,14 +110,14 @@ export default function TokenSelect({ onChange, chainId = 1, nativeToken = {}, l
 
     setValue(e);
 
-    if (typeof onChange === "function") {
+    if (typeof onChange === 'function') {
       onChange(e.value);
     }
   };
 
   const loadList = async () => {
     // https://tokens.coingecko.com/uniswap/all.json
-    const res = await axios.get("https://tokens.coingecko.com/uniswap/all.json");
+    const res = await axios.get('https://tokens.coingecko.com/uniswap/all.json');
     const { tokens } = res.data;
 
     setList(tokens);
@@ -139,11 +139,11 @@ export default function TokenSelect({ onChange, chainId = 1, nativeToken = {}, l
         labelInValue={true}
         id="0xERC20TokenSelect" // name it something other than address for auto fill doxxing
         name="0xERC20TokenSelect" // name it something other than address for auto fill doxxing
-        placeholder={props.placeholder ? props.placeholder : "Token search... Eg: GTC"}
+        placeholder={props.placeholder ? props.placeholder : 'Token search... Eg: GTC'}
         value={value}
         onChange={handleOnChange}
         notFoundContent={null}
-        style={{ width: "100%" }}
+        style={{ width: '100%' }}
       >
         {children}
       </Select>

@@ -1,11 +1,11 @@
-import React, { Fragment, useState } from "react";
+import React, { Fragment, useState } from 'react';
 
 import { Menu, Transition } from '@headlessui/react';
 
-import { classNames, blockExplorerLink } from "../helpers";
-import Address from "./Address";
-import Balance from "./Balance";
-import WalletModal from "./WalletModal";
+import { classNames, blockExplorerLink } from '../helpers';
+import Address from './Address';
+import Balance from './Balance';
+import WalletModal from './WalletModal';
 
 /** 
   ~ What it does? ~
@@ -72,12 +72,15 @@ export default function Account({
     <div className="flex items-center">
       <Menu as="div" className="ml-3 relative">
         <div className="flex items-center inline-flex items-center pl-3.5 border border-transparent select-none text-sm text-gray-900 leading-4 font-normal rounded-full shadow-sm bg-slate-200 dark:bg-neutral-900 dark:text-white">
-          <Balance address={address} provider={localProvider} price={price} textSize='text-lg' />
-          <Menu.Button
-            className="inline-flex items-center px-3.5 py-1.5 border border-transparent text-sm leading-4 font-medium rounded-full shadow-sm bg-slate-100 hover:border-slate-400 focus:outline-none focus:border-slate-400 dark:bg-neutral-800 dark:hover:border-gray-700 dark:focus:border-gray-700"
-          >
+          <Balance address={address} provider={localProvider} price={price} textSize="text-lg" />
+          <Menu.Button className="inline-flex items-center px-3.5 py-1.5 border border-transparent text-sm leading-4 font-medium rounded-full shadow-sm bg-slate-100 hover:border-slate-400 focus:outline-none focus:border-slate-400 dark:bg-neutral-800 dark:hover:border-gray-700 dark:focus:border-gray-700">
             <span className="sr-only">Open user menu</span>
-            <Address address={address} disableAddressLink={true} ensProvider={mainnetProvider} blockExplorer={blockExplorer} />
+            <Address
+              address={address}
+              disableAddressLink={true}
+              ensProvider={mainnetProvider}
+              blockExplorer={blockExplorer}
+            />
           </Menu.Button>
         </div>
         <Transition
@@ -90,14 +93,14 @@ export default function Account({
           leaveTo="transform opacity-0 scale-95"
         >
           <Menu.Items className="origin-top-right absolute right-0 mt-2 w-48 rounded-md shadow-lg py-1 bg-white dark:bg-gray-900 ring-1 ring-black ring-opacity-5 focus:outline-none">
-            {accountNavigation.map((item) => (
+            {accountNavigation.map(item => (
               <Menu.Item key={item.name}>
                 {({ active }) => (
                   <span
                     onClick={item.action}
                     className={classNames(
                       active ? 'bg-gray-100' : '',
-                      'cursor-pointer block px-4 py-2 text-sm text-gray-700 dark:text-white dark:hover:bg-gray-800'
+                      'cursor-pointer block px-4 py-2 text-sm text-gray-700 dark:text-white dark:hover:bg-gray-800',
                     )}
                   >
                     {item.name}
